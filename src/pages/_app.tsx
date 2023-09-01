@@ -4,8 +4,6 @@ import '@/styles/globals.css';
 import '@/styles/markdown.css';
 
 import { ErrorBoundary } from '@/components/ErrorBoundary';
-import { IssueListContextProvider } from '@/context/IssueListProvider';
-import { IssueContextProvider } from '@/context/IssueProvider';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -16,11 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </div>
       )}
     >
-      <IssueListContextProvider>
-        <IssueContextProvider>
-          <Component {...pageProps} />
-        </IssueContextProvider>
-      </IssueListContextProvider>
+      <Component {...pageProps} />
     </ErrorBoundary>
   );
 }

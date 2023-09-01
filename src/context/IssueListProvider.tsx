@@ -1,10 +1,10 @@
 import {
   createContext,
   Dispatch,
+  MutableRefObject,
   PropsWithChildren,
   SetStateAction,
   useContext,
-  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -20,6 +20,10 @@ export interface IssueListContextProps {
   isError: boolean;
   hasNextPage: boolean;
   setPageNum: Dispatch<SetStateAction<number>>;
+  intObserver: MutableRefObject<IntersectionObserver | undefined>;
+  fetchIssues: (pageNum: number) => Promise<void>;
+  pageNum: number;
+  isInitialLoad: boolean;
 }
 
 export const IssueListContext = createContext<
@@ -30,17 +34,20 @@ export const IssueListContextProvider = ({ children }: PropsWithChildren) => {
   const [issues, setIssues] = useState<Issue[]>([]);
   const [pageNum, setPageNum] = useState<number>(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [isError, setIsError] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(false);
 
   const controller = useRef(new AbortController());
+
+  const intObserver = useRef<IntersectionObserver>();
 
   const fetchIssues = async (pageNum: number) => {
     const { signal } = controller.current;
 
     try {
       setIsLoading(true);
-
+      setIsInitialLoad(false);
       const data = await getIssuesPage(pageNum);
       setIssues((prev) => {
         const newIssues = data.filter(
@@ -63,10 +70,6 @@ export const IssueListContextProvider = ({ children }: PropsWithChildren) => {
     throw new Error('API 호출 중 에러 발생');
   }
 
-  useEffect(() => {
-    fetchIssues(pageNum);
-  }, [pageNum]);
-
   return (
     <IssueListContext.Provider
       value={{
@@ -75,6 +78,10 @@ export const IssueListContextProvider = ({ children }: PropsWithChildren) => {
         isError,
         hasNextPage,
         setPageNum,
+        intObserver,
+        fetchIssues,
+        pageNum,
+        isInitialLoad,
       }}
     >
       {children}
