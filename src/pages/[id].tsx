@@ -1,18 +1,21 @@
 import { useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import remarkGfm from 'remark-gfm';
 
-import { useOctokitContext } from '@/context/OctokitProvider';
+import { useIssueContext } from '@/context/IssueProvider';
 
 const IssueDetails = () => {
-  const { issueDetail, fetchIssueDetails } = useOctokitContext();
+  const { issueDetail, fetchIssueDetails, setIssueDetail } = useIssueContext();
   const router = useRouter();
-  const id = router.query.id;
+  const id = Number(router.query.id);
   console.log(issueDetail);
 
-  const fetchIssueItem = async (id: string | string[]) => {
+  const fetchIssueItem = async (id: number) => {
     try {
-      fetchIssueDetails(id);
+      const data = await fetchIssueDetails(id);
+      setIssueDetail(data);
     } catch (e) {
       console.error(e);
     }
@@ -38,7 +41,12 @@ const IssueDetails = () => {
         width={80}
         height={80}
       />
-      <div>{body}</div>
+      <section className=" px-10">
+        {!body && <p className="text-center">등록된 이슈가 없습니다.</p>}
+        <ReactMarkdown remarkPlugins={[remarkGfm]} className="markdown-body">
+          {body as string}
+        </ReactMarkdown>
+      </section>
       <div>{updated_at}</div>
       <div>{comments}</div>
     </>

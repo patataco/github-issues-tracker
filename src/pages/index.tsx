@@ -1,14 +1,13 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import Image from 'next/image';
 
-import { useOctokitContext } from '@/context/OctokitProvider';
+import { useIssueListContext } from '@/context/IssueListProvider';
 
 import IssueItem from '../components/IssueItem';
 
 export default function Home() {
-  const { issues, isLoading, isError, error, hasNextPage, setPageNum } =
-    useOctokitContext();
-
+  const { issues, isLoading, hasNextPage, setPageNum } = useIssueListContext();
+  const [error, setError] = useState<Error>();
   const intObserver = useRef<IntersectionObserver>();
   const lastIssueRef = useCallback(
     (issue: HTMLElement | null) => {
@@ -26,7 +25,9 @@ export default function Home() {
     [isLoading, hasNextPage]
   );
 
-  if (isError && error) return <p>Error: {error.message}</p>;
+  if (error) {
+    throw error;
+  }
 
   const items = issues.map((issue, i) => {
     const shouldDisplayAdd = (i + 1) % 5 === 0;
@@ -57,6 +58,13 @@ export default function Home() {
 
   return (
     <>
+      <button
+        onClick={() => {
+          setError(new Error('hihi'));
+        }}
+      >
+        error
+      </button>
       <ul className="p-8">{issues.length > 0 ? items : <p>Empty</p>}</ul>
       {isLoading && <p>Loading More Issues...</p>}
     </>

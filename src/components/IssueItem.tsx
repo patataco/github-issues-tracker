@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import Link from 'next/link';
 
-import { Issue } from '@/context/OctokitProvider';
+import { Issue } from '@/context/IssueListProvider';
 
 const IssueItem = forwardRef<HTMLLIElement, { issue: Issue }>(
   ({ issue }, ref) => {
