@@ -38,7 +38,7 @@ export const IssueContextProvider = ({ children }: PropsWithChildren) => {
   };
 
   if (isError) {
-    throw new Error('API 호출 중 에러 발생');
+    throw new Error('요청을 처리하는데 실패했습니다.');
   }
 
   return (

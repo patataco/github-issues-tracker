@@ -12,7 +12,7 @@ const IssueItem = forwardRef<HTMLLIElement, { issue: Issue }>(
     return (
       <li ref={ref} className="flex h-[100px] w-full  border-b p-4">
         <div className="flex grow flex-col justify-between">
-          <Link href={`/${number}`}>
+          <Link href={`/issue/${number}`}>
             <div className="flex w-full items-center gap-4 text-lg font-black">
               {`#${number}`}
               <div className="max-w-[360px] truncate">{title}</div>
