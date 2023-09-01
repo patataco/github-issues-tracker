@@ -32,6 +32,18 @@ npm run dev
 
 Vercel을 통해 배포. [DEMO](https://github-issues-tracker-lemon.vercel.app)
 
+- 이슈 목록
+    
+  ![CleanShot 2023-09-01 at 23 36 08](https://github.com/patataco/github-issues-tracker/assets/127014105/820f8d91-873a-4690-b4f2-3904d4b1445c)
+
+- 이슈 상세페이지
+  
+  ![CleanShot 2023-09-01 at 23 37 50](https://github.com/patataco/github-issues-tracker/assets/127014105/6a462003-7f73-446e-b038-7400e8b6e194)
+
+- 에러 처리
+  
+  ![CleanShot 2023-09-01 at 23 38 35](https://github.com/patataco/github-issues-tracker/assets/127014105/4f353c34-dd34-4f0d-8afb-9c0fea2286dd)
+
 ## `language & libraries`
 
 * Typescript
