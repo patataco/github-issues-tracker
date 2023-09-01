@@ -2,15 +2,22 @@ import Image from 'next/image';
 
 const AD = () => {
   return (
-    <a href={AD_URl} target="_blank" rel="noopener noreferrer">
-      <Image
-        src={AD_IMG_URL}
-        alt="광고"
-        width={110}
-        height={110}
-        className="p-4"
-      />
-    </a>
+    <div className="flex w-full justify-center border-b">
+      <a
+        href={AD_URl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex w-full justify-center"
+      >
+        <Image
+          src={AD_IMG_URL}
+          alt="광고"
+          width={110}
+          height={110}
+          className="p-4"
+        />
+      </a>
+    </div>
   );
 };
 

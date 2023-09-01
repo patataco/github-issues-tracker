@@ -3,33 +3,45 @@ import Image from 'next/image';
 import remarkGfm from 'remark-gfm';
 
 import { useIssueContext } from '@/context/IssueProvider';
+import { convertDate } from '@/utils';
 
 const IssueDetails = () => {
   const { issueDetail } = useIssueContext();
 
   if (!issueDetail) return;
 
-  const { number, title, user, updated_at, comments, body } = issueDetail;
+  const { number, title, user, created_at, comments, body } = issueDetail;
+  const convertedDate = convertDate(created_at);
 
   return (
-    <>
-      <div>{number}</div>
-      <div>{title}</div>
-      <Image
-        src={user?.avatar_url || DEFAULT_IMAGE_URL}
-        alt="프로필"
-        width={80}
-        height={80}
-      />
-      <section className=" px-10">
-        {!body && <p className="text-center">등록된 이슈가 없습니다.</p>}
+    <article className="mt-4 p-4">
+      <div className="flex gap-4 border-b pb-4">
+        <Image
+          src={user?.avatar_url || DEFAULT_IMAGE_URL}
+          alt="프로필"
+          width={80}
+          height={80}
+        />
+        <div className="flex flex-col gap-4">
+          <div className="flex items-start gap-2 text-2xl font-black">
+            <div>{`#${number}`}</div>
+            <div>{title}</div>
+          </div>
+          <div className="flex justify-between">
+            <div className="flex gap-2">
+              <p>{`작성자: ${user?.login},`}</p>
+              <p>{`작성일: ${convertedDate}`}</p>
+            </div>
+            <div className="flex items-end justify-end whitespace-nowrap">{`코멘트: ${comments}`}</div>
+          </div>
+        </div>
+      </div>
+      <section className="px-10 pt-10">
         <ReactMarkdown remarkPlugins={[remarkGfm]} className="markdown-body">
           {body as string}
         </ReactMarkdown>
       </section>
-      <div>{updated_at}</div>
-      <div>{comments}</div>
-    </>
+    </article>
   );
 };
 

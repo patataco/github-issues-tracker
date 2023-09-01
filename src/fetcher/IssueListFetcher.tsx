@@ -8,13 +8,17 @@ export const IssueListFetcher = ({ children }: PropsWithChildren) => {
     useIssueListContext();
 
   useEffect(() => {
-    console.log(isInitialLoad);
     fetchIssues(pageNum);
   }, [pageNum]);
 
-  if (isInitialLoad || isLoading) {
+  if (isInitialLoad) {
     return <LoadingSpinner />;
   }
-  console.log(isInitialLoad);
-  return <>{children}</>;
+
+  return (
+    <>
+      {children}
+      {isLoading && <LoadingSpinner />}
+    </>
+  );
 };

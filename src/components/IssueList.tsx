@@ -28,23 +28,21 @@ const IssueList = () => {
   const shouldDisplayAdd = (i: number) => (i + 1) % 4 === 0;
 
   return (
-    <>
-      <ul className="p-8">
-        {issues.length > 0 ? (
-          issues.map((issue, i) => (
-            <React.Fragment key={issue.id}>
-              <IssueItem
-                issue={issue}
-                ref={issues.length === i + 1 ? lastIssueRef : null}
-              />
-              {shouldDisplayAdd(i) && <AD />}
-            </React.Fragment>
-          ))
-        ) : (
-          <p>Empty</p>
-        )}
-      </ul>
-    </>
+    <ul className="p-4">
+      {issues.length > 0 ? (
+        issues.map((issue, i) => (
+          <React.Fragment key={issue.id}>
+            <IssueItem
+              issue={issue}
+              ref={issues.length === i + 1 ? lastIssueRef : null}
+            />
+            {shouldDisplayAdd(i) && <AD />}
+          </React.Fragment>
+        ))
+      ) : (
+        <p>Empty</p>
+      )}
+    </ul>
   );
 };
 

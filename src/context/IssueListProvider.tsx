@@ -47,7 +47,6 @@ export const IssueListContextProvider = ({ children }: PropsWithChildren) => {
 
     try {
       setIsLoading(true);
-      setIsInitialLoad(false);
       const data = await getIssuesPage(pageNum);
       setIssues((prev) => {
         const newIssues = data.filter(
@@ -63,6 +62,7 @@ export const IssueListContextProvider = ({ children }: PropsWithChildren) => {
       setIsError(true);
     } finally {
       setIsLoading(false);
+      setIsInitialLoad(false);
     }
   };
 
